@@ -1,4 +1,5 @@
-Continuous Integration Setup for a Python Project
+Continuous Integration Setup for a Python Project:
+
 In a team of six developers actively working on a Python application soon to be released, setting up a robust Continuous Integration (CI) pipeline is crucial to ensure code quality and streamline development.
 Common steps in a CI process include linting, testing, and building.
 For Python, linting is typically handled by tools like flake8 or pylint, which help enforce coding standards and catch common errors early. Testing is often managed with frameworks such as pytest or unittest, providing a rich environment for writing and running automated tests.
