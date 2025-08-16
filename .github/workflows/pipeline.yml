@@ -41,7 +41,7 @@ jobs:
           fi
       # 🚀 Deploy to Render (only on push to main)
       - name: Trigger Render Deploy
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && env.skip == 'false'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && ${{env.skip == 'false'}}
         run: curl "$RENDER_DEPLOY_HOOK"
         env:
           RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
@@ -64,8 +64,9 @@ jobs:
                echo "skip=false" >> $GITHUB_ENV
            fi          
       - name: Bump version and push tag
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && env.skip == 'false'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && ${{env.skip == 'false'}}
         uses: anothrNick/github-tag-action@1.64.0
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
           DEFAULT_BUMP: patch
+          INITIAL_VERSION: 0.0.0
