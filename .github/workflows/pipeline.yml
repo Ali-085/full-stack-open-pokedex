@@ -1,4 +1,4 @@
-name: Deployment pipeline
+name: Deployment pipeline (Render)
 
 on:
   push:
@@ -7,52 +7,33 @@ on:
   pull_request:
     branches: [main]
     types: [opened, synchronize]
-      
+
 jobs:
-  simple_deployment_pipeline:
+  build_and_deploy:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      
-      - name: Install dependencies 
+
+      - name: Install dependencies
         run: npm ci
 
       - name: Check style
         run: npm run eslint
 
-      - name: Build
+      - name: Build app
         run: npm run build
 
-      - name: Test
+      - name: Run tests
         run: npm run test
 
-      - name: Debug RAILWAY_TOKEN
+      # 🚀 Deploy to Render (only on push to main)
+      - name: Trigger Render Deploy
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: |
-          if [ -z "$RAILWAY_TOKEN" ]; then
-            echo "❌ RAILWAY_TOKEN is missing!"
-            exit 1
-          else
-            echo "✅ RAILWAY_TOKEN is available"
-          fi
+        run: curl "$RENDER_DEPLOY_HOOK"
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-      # 🚀 Deploy to Railway only on push to main
-      - name: Install Railway CLI
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: npm i -g @railway/cli
-
-      - name: Deploy to Railway
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: |
-          echo "Using Railway CLI version:"
-          railway --version
-          echo "Deploying..."
-          railway up --detach
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
