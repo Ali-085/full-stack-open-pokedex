@@ -25,6 +25,8 @@
   },
   "homepage": "https://github.com/smartlyio/fullstackopen-cicd#readme",
   "devDependencies": {
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4",
     "@babel/core": "^7.23.7",
     "@babel/plugin-transform-runtime": "^7.23.7",
     "@babel/preset-env": "^7.23.7",
