@@ -31,6 +31,17 @@ jobs:
       - name: Test
         run: npm run test
 
+      - name: Debug RAILWAY_TOKEN
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          if [ -z "$RAILWAY_TOKEN" ]; then
+            echo "❌ RAILWAY_TOKEN is missing!"
+            exit 1
+          else
+            echo "✅ RAILWAY_TOKEN is available"
+          fi
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
       # 🚀 Deploy to Railway only on push to main
       - name: Install Railway CLI
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
