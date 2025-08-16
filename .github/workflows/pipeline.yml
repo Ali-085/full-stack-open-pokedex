@@ -11,19 +11,33 @@ on:
 jobs:
   simple_deployment_pipeline:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
+      
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      
       - name: Install dependencies 
-        run: npm install  
+        run: npm ci
 
       - name: Check style
         run: npm run eslint
-        
+
       - name: Build
         run: npm run build
 
       - name: Test
         run: npm run test
+
+      # 🚀 Deploy to Railway only on push to main
+      - name: Install Railway CLI
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: npm i -g @railway/cli
+
+      - name: Deploy to Railway
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: railway up --service <your-service-name> --detach
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
