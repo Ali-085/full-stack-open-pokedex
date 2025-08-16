@@ -48,6 +48,23 @@ jobs:
         run: curl "$RENDER_DEPLOY_HOOK"
         env:
           RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+
+      - name: Deploy Success
+        uses: rjstone/discord-webhook-notify@v2
+        if: success()
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          severity: info
+          details: Deployment Successful
+
+      - name: Deploy Fail
+        uses: rjstone/discord-webhook-notify@v2
+        if: failure()
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          severity: info
+          details: Deployment Failed
+          
           
   tag_release:
     needs: [simple_deployment_pipeline]
