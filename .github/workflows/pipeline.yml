@@ -53,7 +53,7 @@ jobs:
         uses: rjstone/discord-webhook-notify@v2
         if: success()
         with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          webhookUrl: ${{ secrets.WEBHOOK }}
           severity: info
           details: Deployment Successful
           username: Notification (GitHub Actions)
@@ -63,7 +63,7 @@ jobs:
         uses: rjstone/discord-webhook-notify@v2
         if: failure()
         with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          webhookUrl: ${{ secrets.WEBHOOK }}
           severity: error
           details: Deployment Failed
           username: Notification (GitHub Actions)
