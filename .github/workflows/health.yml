@@ -10,14 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Health Check Ping
-        uses: antonpup/url-health-check@v1.0.0
+      - name: Check application status
+        uses: dawidd6/action-http-status-check@v2
         with:
           url: https://pokedex-m83o.onrender.com/health
-          timeout: 10
+          success-codes: '200'
           retries: 2
           retry-delay: 5
-          fail-on-status: true
+        id: health
 
       - name: Notify Discord if app is down
         if: failure()
