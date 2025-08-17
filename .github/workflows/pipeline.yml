@@ -62,7 +62,7 @@ jobs:
         if: failure()
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: info
+          severity: error
           details: Deployment Failed
           
           
