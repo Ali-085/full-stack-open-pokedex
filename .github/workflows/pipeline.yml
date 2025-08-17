@@ -61,7 +61,7 @@ jobs:
         if: failure()
         uses: Ilshidur/action-discord@master
         env:
-          DISCORD_WEBHOOK: ${{ secrets.]WEBHOOK }}
+          DISCORD_WEBHOOK: ${{ secrets.WEBHOOK }}
         with:
           args: "Deployment Failed from GitHub Actions"
       
