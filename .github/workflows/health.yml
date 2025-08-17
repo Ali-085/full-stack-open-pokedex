@@ -10,12 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check application status
-        uses: mheap/github-action-http-status@v1
-        with:
-          url: https://pokedex-m83o.onrender.com/health
-          expected-status: '200'
 
+      - name: Check app health
+        run: |
+          status=$(curl -s -o /dev/null -w "%{http_code}" ${{ secrets.DEPLOYED_APP_URL }})
+          if [ "$status" -ne 200 ]; then
+            echo "App is down! Status code: $status"
+            exit 1
+          else
+            echo "App is healthy! Status code: $status"
+          fi
       
       - name: Notify Discord if app is down
         if: failure()
