@@ -1,0 +1,36 @@
+name: Periodic Health Check
+
+on:
+  schedule:
+    - cron: '*/5 * * * *' # runs every 5 minutes
+  workflow_dispatch: # allows manual trigger
+
+jobs:
+  health_check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Health Check Ping
+        uses: antonpup/url-health-check@v1.0.0
+        with:
+          url: https://pokedex-m83o.onrender.com/health
+          timeout: 10
+          retries: 2
+          retry-delay: 5
+          fail-on-status: true
+
+      - name: Notify Discord if app is down
+        if: failure()
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with:
+          args: "❌ Health check failed! The application may be down."
+          
+      - name: Notify Discord if app is healthy
+        if: success()
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with:
+          args: "✅ Health check passed. Application is running smoothly."
