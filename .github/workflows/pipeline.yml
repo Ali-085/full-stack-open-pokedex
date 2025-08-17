@@ -50,24 +50,20 @@ jobs:
           RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
 
       - name: Notify Discord Success
-        uses: rjstone/discord-webhook-notify@v2
         if: success()
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.WEBHOOK }}
         with:
-          webhookUrl: ${{ secrets.WEBHOOK }}
-          severity: info
-          details: Deployment Successful
-          username: Notification (GitHub Actions)
-          avatarUrl: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          args: "✅ Deployment Successful from GitHub Actions"
       
       - name: Notify Discord Fail
-        uses: rjstone/discord-webhook-notify@v2
         if: failure()
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.]WEBHOOK }}
         with:
-          webhookUrl: ${{ secrets.WEBHOOK }}
-          severity: error
-          details: Deployment Failed
-          username: Notification (GitHub Actions)
-          avatarUrl: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          args: "❌ Deployment Failed from GitHub Actions"
       
   tag_release:
     needs: [simple_deployment_pipeline]
