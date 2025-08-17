@@ -11,14 +11,12 @@ jobs:
 
     steps:
       - name: Check application status
-        uses: dawidd6/action-http-status-check@v2
+        uses: mheap/github-action-http-status@v1
         with:
           url: https://pokedex-m83o.onrender.com/health
-          success-codes: '200'
-          retries: 2
-          retry-delay: 5
-        id: health
+          expected-status: '200'
 
+      
       - name: Notify Discord if app is down
         if: failure()
         uses: Ilshidur/action-discord@master
