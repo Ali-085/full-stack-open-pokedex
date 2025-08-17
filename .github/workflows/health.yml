@@ -14,7 +14,7 @@ jobs:
       - name: Check app health
         run: |
           status=$(curl -s -o /dev/null -w "%{http_code}" ${{ secrets.DEPLOYED_APP_URL }})
-          if [ "$status" -ne 400 ]; then
+          if [ "$status" -ne 200 ]; then
             echo "App is down! Status code: $status"
             exit 1
           else
