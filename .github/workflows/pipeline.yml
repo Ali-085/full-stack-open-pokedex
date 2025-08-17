@@ -55,7 +55,7 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.WEBHOOK }}
         with:
-          args: "✅ Deployment Successful from GitHub Actions"
+          args: "Deployment Successful from GitHub Actions"
       
       - name: Notify Discord Fail
         if: failure()
@@ -63,7 +63,7 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.]WEBHOOK }}
         with:
-          args: "❌ Deployment Failed from GitHub Actions"
+          args: "Deployment Failed from GitHub Actions"
       
   tag_release:
     needs: [simple_deployment_pipeline]
