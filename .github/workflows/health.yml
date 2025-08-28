@@ -1,10 +1,10 @@
 name: Periodic Health Check
 
-on:
+/*on:
   schedule:
     - cron: '*/5 * * * *' # runs every 5 minutes
   workflow_dispatch: # allows manual trigger
-
+*/
 jobs:
   health_check:
     runs-on: ubuntu-latest
