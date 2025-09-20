@@ -16,5 +16,4 @@ Start by running `npm install` inside the project folder
 
 # Other Repository Link
 
-[https://studies.cs.helsinki.fi/stats/api/certificate/fs-react-native-2020/en/adc832afa9d41f93cefe9519083dc069
-](https://github.com/Ali-a085/Blog)
+https://github.com/Ali-a085/Blog
